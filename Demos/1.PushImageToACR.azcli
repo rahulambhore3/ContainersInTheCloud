@@ -24,7 +24,7 @@ docker images
 
 
 # build image
-docker build -t testimage C:\git\dbafromthecold\ContainersInTheCloud\Code
+docker build -t testimage /home/dbafromthecold/git/ContainersInTheCloud/Code
 
 
 
@@ -34,8 +34,8 @@ docker images
 
 
 # run container locally to confirm
-docker run -d -p 15789:1433 `
-    --env ACCEPT_EULA=Y --env SA_PASSWORD=Testing1122 `
+docker run -d -p 15789:1433 \
+    --env ACCEPT_EULA=Y --env SA_PASSWORD=Testing1122 \
         --name testcontainer testimage
 
 
@@ -45,7 +45,7 @@ docker ps -a
 
 
 # tag local image with ACR name
-docker tag testimage TestContainerRegistry01.azurecr.io/devsqlimage:v4
+docker tag testimage testcontainerregistry01.azurecr.io/devsqlimage:v4
 
 
 
@@ -55,7 +55,7 @@ docker images
 
 
 # push image to registry
-docker push TestContainerRegistry01.azurecr.io/devsqlimage:v4
+docker push testcontainerregistry01.azurecr.io/devsqlimage:v4
 
 
 
