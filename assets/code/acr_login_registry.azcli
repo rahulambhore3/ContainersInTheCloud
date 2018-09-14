@@ -1,1 +1,0 @@
-az acr login --name TestContainerRegistry01
