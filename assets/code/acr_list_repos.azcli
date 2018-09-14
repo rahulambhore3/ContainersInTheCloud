@@ -1,3 +1,0 @@
-az acr repository list \
-	--name testcontainerregistry01 \
-		--output table

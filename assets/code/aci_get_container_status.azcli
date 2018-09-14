@@ -1,2 +1,0 @@
-az container show  --name testcontainer1 \
-	--resource-group containers1
