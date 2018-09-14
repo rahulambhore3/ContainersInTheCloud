@@ -1,34 +1,15 @@
-# https://dbafromthecold.com/2017/11/15/running-sql-server-in-kubernetes-on-azure-container-services-aks-ii/
-
-
-
-# check azure-cli is installed
-az --version
+# check AzureRM module is installed
+Get-Module -ListAvailable AzureRM
 
 
 
 # log in to azure
-az login
-
-
-
-# enable flag on subscription to use AKS (as still in preview)
-az provider register -n Microsoft.ContainerService
-
-
-
-# confirm flag enabled
-az provider show -n Microsoft.ContainerService
-
-
-
-# create a resource group for all objects
-az group create --name containers1 --location eastus
+Connect-AzureRmAccount
 
 
 
 # create kubernetes cluster (with 2 nodes)
-az aks create --resource-group containers1 --name mySQLK8sCluster1 --node-count 2 --generate-ssh-keys
+New-AzureRmAks -ResourceGroupName containers1 -Name mySQLK8sCluster1 -NodeCount 2
 
 
 
@@ -38,8 +19,7 @@ az aks install-cli
 
 
 # get credentials to connect to cluster
-az aks get-credentials --resource-group containers1 --name mySQLK8sCluster1
-
+Import-AzureRmAksCredential -ResourceGroupName containers1 -Name mySQLK8sCluster1
 
 
 # confirm connection to cluster by viewing nodes
@@ -47,19 +27,18 @@ kubectl get nodes
 
 
 
-# Get client ID
-az aks show --resource-group containers1 --name mySQLK8sCluster1 --query "servicePrincipalProfile.clientId" --output tsv
-
-
+# Get AKS client ID
+$aks = Get-AzureRmResource -ResourceGroupName containers1 -ResourceType Microsoft.ContainerService/managedClusters `
+  -ResourceName mySQLK8sCluster1 -ApiVersion 2018-03-31
+$clientid = $aks.properties.servicePrincipalProfile.clientId
 
 # Get ACR ID
-az acr show --name TestContainerRegistry01 --resource-group containers1 --query "id" --output tsv
-
+$acr = Get-AzureRmContainerRegistry -ResourceGroupName containers1 -Name TestContainerRegistry01 
+$resourceid = $acr.id
 
 
 # Create role to allow deployments
-az role assignment create --assignee <<CLIENTID>> --role Reader --scope <<ACRID>>
-
+New-AzureRmRoleAssignment -ApplicationId $clientid -RoleDefinitionName "Reader" -Scope $resourceid
 
 
 # create yaml file for deployment
@@ -123,9 +102,4 @@ kubectl get service
 
 
 # view dashboard
-az aks browse --resource-group containers1 --name mySQLK8sCluster1
-
-
-
-# delete resource group
-az group delete --name containers1
+Start-AzureRmAksDashboard -ResourceGroupName containers1 -Name mySQLK8sCluster1

@@ -74,5 +74,4 @@ Get-AzureRmContainerInstanceLog --ResourceGroupName containers1 -ContainerGroupN
 
 
 # delete container
-az container delete --name testcontainer1 --resource-group containers1
 Remove-AzureRmContainerGroup -ResourceGroupName containers1 -Name testcontainer1
