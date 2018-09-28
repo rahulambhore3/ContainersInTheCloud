@@ -1,10 +1,11 @@
-# check AzureRM module is installed
-Get-Module -ListAvailable AzureRM
+# install AzureRM.aks with -AllowPrerelease (it's in preview - so expect weirdness!)
+# this requires up-to-date versions of PowershellGet & Packagemanagement modules
+Install-Module -Name AzureRM.Aks -AllowPrerelease
 
 
 
-# log in to azure
-Connect-AzureRmAccount
+# import the module
+Import-Module AzureRm.Aks
 
 
 

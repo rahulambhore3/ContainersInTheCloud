@@ -20,12 +20,18 @@ New-AzureRMContainerRegistry -ResourceGroupName containers1 `
 
 
 # get registry details
-Get-AzureRmContainerRegistryCredential -Registry TestContainerRegistry01
+$Registry = Get-AzureRmContainerRegistry -ResourceGroupName "containers1" -Name "TestContainerRegistry01"
+
+
+
+# get registry credentails
+$RegistryCredential = Get-AzureRmContainerRegistryCredential `
+    -ResourceGroupName "containers1" -Name "TestContainerRegistry01"
 
 
 
 # log into registry
-docker login <<LOGINSERVER>> -u <<USERNAME>>
+docker login $Registry.LoginServer -u $$RegistryCredential.Username -p $RegistryCredential.Password
 
 
 
@@ -50,11 +56,9 @@ docker push TestContainerRegistry01.azurecr.io/devsqlimage:latest
 
 
 # view registry
-Get-AzureRmContainerRegistry -ResourceGroupName containers1 -Name TestContainerRegistry
-
-
-
-# show repository
+Get-AzureRmContainerRegistry `
+    -ResourceGroupName containers1 -Name TestContainerRegistry01 `
+        -IncludeDetail
 
 
 

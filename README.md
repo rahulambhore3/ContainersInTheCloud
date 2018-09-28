@@ -1,6 +1,6 @@
 ### Code for my Containers in the Cloud presentation - VSCode running on windows
 
-#### Powershell scripts in this branch are currently a work in progress
+#### Scripts for AKS use a powershell module that's in preview
 
 Powerpoint presentation is included in the master branch, online presentation can be found here: -
 <br>
