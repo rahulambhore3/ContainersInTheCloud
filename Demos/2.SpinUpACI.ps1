@@ -10,7 +10,7 @@ Connect-AzureRmAccount
 
 # get credentials
 $RegistryCredential = Get-AzureRmContainerRegistryCredential `
-    -ResourceGroupName "containers1" -Name "TestContainerRegistry01"
+    -ResourceGroupName "containersdemo" -Name "TestContainerRegistry01"
 
 
 
@@ -29,7 +29,7 @@ $envs.add("SA_PASSWORD","Testing1122")
 
 # create container
 New-AzureRmContainerGroup `
-    -ResourceGroupName containers1 `
+    -ResourceGroupName containersdemo `
     -Name testcontainer2 `
     -Image testcontainerregistry01.azurecr.io/devsqlimage:latest `
     -RegistryCredential $PsCred `
@@ -42,25 +42,25 @@ New-AzureRmContainerGroup `
 
 
 # confirm container created
-Get-AzureRmContainerGroup -ResourceGroupName containers1 -Name testcontainer2
+Get-AzureRmContainerGroup -ResourceGroupName containersdemo -Name testcontainer2
 
 
 
 # have a look at the other container
-Get-AzureRmContainerGroup -ResourceGroupName containers1 -Name testcontainer1
+Get-AzureRmContainerGroup -ResourceGroupName containersdemo -Name testcontainer1
 
 
 
 # confirm container created
-Get-AzureRmContainerGroup -ResourceGroupName containers1 -Name testcontainer2
+Get-AzureRmContainerGroup -ResourceGroupName containersdemo -Name testcontainer2
 
 
 
 # get container logs
-Get-AzureRmContainerInstanceLog --ResourceGroupName containers1 -ContainerGroupName testcontainers2
+Get-AzureRmContainerInstanceLog --ResourceGroupName containersdemo -ContainerGroupName testcontainers2
 
 
 
 # delete container
-Remove-AzureRmContainerGroup -ResourceGroupName containers1 -Name testcontainer1
+Remove-AzureRmContainerGroup -ResourceGroupName containersdemo -Name testcontainer1
 

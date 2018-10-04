@@ -9,13 +9,13 @@ Connect-AzureRmAccount
 
 
 # get registry details
-$Registry = Get-AzureRmContainerRegistry -ResourceGroupName "containers1" -Name "TestContainerRegistry01"
+$Registry = Get-AzureRmContainerRegistry -ResourceGroupName "containersdemo" -Name "TestContainerRegistry01"
 
 
 
 # get registry credentails
 $RegistryCredential = Get-AzureRmContainerRegistryCredential `
-    -ResourceGroupName "containers1" -Name "TestContainerRegistry01"
+    -ResourceGroupName "containersdemo" -Name "TestContainerRegistry01"
 
 
 
@@ -68,7 +68,7 @@ docker push TestContainerRegistry01.azurecr.io/devsqlimage:v4
 
 # view registry
 Get-AzureRmContainerRegistry `
-    -ResourceGroupName containers1 -Name TestContainerRegistry01 `
+    -ResourceGroupName containersdemo -Name TestContainerRegistry01 `
         -IncludeDetail
 
 
