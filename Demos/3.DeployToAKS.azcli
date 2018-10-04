@@ -9,7 +9,7 @@ az login
 
 
 # get credentials to connect to cluster
-az aks get-credentials --resource-group containers1 --name mySQLK8sCluster1
+az aks get-credentials --resource-group containersdemo --name mySQLK8sCluster1
 
 
 
@@ -19,12 +19,12 @@ kubectl get nodes
 
 
 # Get client ID
-az aks show --resource-group containers1 --name mySQLK8sCluster1 --query "servicePrincipalProfile.clientId" --output tsv
+az aks show --resource-group containersdemo --name mySQLK8sCluster1 --query "servicePrincipalProfile.clientId" --output tsv
 
 
 
 # Get ACR ID
-az acr show --name TestContainerRegistry01 --resource-group containers1 --query "id" --output tsv
+az acr show --name TestContainerRegistry01 --resource-group containersdemo --query "id" --output tsv
 
 
 
@@ -70,7 +70,7 @@ kubectl exec -it podname bash
 
 
 # view dashboard
-az aks browse --resource-group containers1 --name mySQLK8sCluster1
+az aks browse --resource-group containersdemo --name mySQLK8sCluster1
 
 
 
