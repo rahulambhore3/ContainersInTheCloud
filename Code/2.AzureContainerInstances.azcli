@@ -77,7 +77,6 @@ az container logs --name testcontainer1 --resource-group containersdemo
 
 
 
-
 # delete container
 az container delete --name testcontainer1 --resource-group containersdemo
 

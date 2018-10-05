@@ -48,47 +48,7 @@ az acr show --name TestContainerRegistry01 --resource-group containersdemo --que
 
 
 # Create role to allow deployments
-az role assignment create --assignee <<CLIENTID>> --role Reader --scope <<ACRID>>
-
-
-
-# create yaml file for deployment
-echo 'apiVersion: apps/v1beta1
-kind: Deployment
-metadata:
-  name: sqlserver
-  labels:
-    app: sqlserver
-spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        name: sqlserver
-    spec:
-      containers:
-      - name: sqlserver1
-        image: testcontainerregistry01.azurecr.io/devsqlimage:latest
-        ports:
-        - containerPort: 1433
-        env:
-        - name: SA_PASSWORD
-          value: "Testing1122"
-        - name: ACCEPT_EULA
-          value: "Y"
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: sqlserver-service
-spec:
-  ports:
-  - name: sqlserver
-    port: 1433
-    targetPort: 1433
-  selector:
-    name: sqlserver
-  type: LoadBalancer' > sqlserver.yml
+az role assignment create --assignee d67213eb-80c0-4e50-bfd6-d0985d96db03 --role Reader --scope /subscriptions/fafcfdcb-d2a1-43a6-adbe-ca29842135a3/resourceGroups/containersdemo/providers/Microsoft.ContainerRegistry/registries/TestContainerRegistry01
 
 
 

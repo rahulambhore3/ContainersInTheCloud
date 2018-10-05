@@ -39,7 +39,7 @@ docker build -t testimage /home/dbafromthecold/git/ContainersInTheCloud/Code
 
 
 # tag local image with ACR name
-docker tag testimage1 testcontainerregistry01.azurecr.io/devsqlimage:latest
+docker tag testimage testcontainerregistry01.azurecr.io/devsqlimage:latest
 
 
 
