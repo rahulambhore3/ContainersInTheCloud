@@ -37,7 +37,7 @@ kubectl get nodes
 
 
 
-# Get client ID
+# Get client ID of cluster
 az aks show --resource-group containersdemo --name mySQLK8sCluster1 --query "servicePrincipalProfile.clientId" --output tsv
 
 
@@ -48,7 +48,7 @@ az acr show --name TestContainerRegistry01 --resource-group containersdemo --que
 
 
 # Create role to allow deployments
-az role assignment create --assignee d67213eb-80c0-4e50-bfd6-d0985d96db03 --role Reader --scope /subscriptions/fafcfdcb-d2a1-43a6-adbe-ca29842135a3/resourceGroups/containersdemo/providers/Microsoft.ContainerRegistry/registries/TestContainerRegistry01
+az role assignment create --assignee CLIENTID --role Reader --scope ACRID
 
 
 
