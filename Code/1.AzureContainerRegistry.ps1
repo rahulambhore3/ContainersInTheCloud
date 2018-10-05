@@ -9,23 +9,29 @@ Connect-AzureRmAccount
 
 
 # create a resource group
-New-AzureRmResourceGroup -Name containers1 -Location eastus
+New-AzureRmResourceGroup -Name containersdemo -Location eastus
 
 
 
 # create registry
-New-AzureRMContainerRegistry -ResourceGroupName containers1 `
+New-AzureRMContainerRegistry -ResourceGroupName containersdemo `
     -Name TestContainerRegistry01 -EnableAdminUser -Sku Basic
 
 
 
 # get registry details
-Get-AzureRmContainerRegistryCredential -Registry TestContainerRegistry01
+$Registry = Get-AzureRmContainerRegistry -ResourceGroupName "containersdemo" -Name "TestContainerRegistry01"
+
+
+
+# get registry credentails
+$RegistryCredential = Get-AzureRmContainerRegistryCredential `
+    -ResourceGroupName "containersdemo" -Name "TestContainerRegistry01"
 
 
 
 # log into registry
-docker login <<LOGINSERVER>> -u <<USERNAME>>
+docker login $Registry.LoginServer -u $$RegistryCredential.Username -p $RegistryCredential.Password
 
 
 
@@ -50,13 +56,11 @@ docker push TestContainerRegistry01.azurecr.io/devsqlimage:latest
 
 
 # view registry
-Get-AzureRmContainerRegistry -ResourceGroupName containers1 -Name TestContainerRegistry
-
-
-
-# show repository
+Get-AzureRmContainerRegistry `
+    -ResourceGroupName containersdemo -Name TestContainerRegistry01 `
+        -IncludeDetail
 
 
 
 # remove registry
-Remove-AzureRmContainerRegistry -ResourceGroupName containers1 -Name TestContainerRegistry
+Remove-AzureRmContainerRegistry -ResourceGroupName containersdemo -Name TestContainerRegistry

@@ -1,15 +1,16 @@
-# check AzureRM module is installed
-Get-Module -ListAvailable AzureRM
+# install AzureRM.aks with -AllowPrerelease (it's in preview - so expect weirdness!)
+# this requires up-to-date versions of PowershellGet & Packagemanagement modules
+Install-Module -Name AzureRM.Aks -AllowPrerelease
 
 
 
-# log in to azure
-Connect-AzureRmAccount
+# import the module
+Import-Module AzureRm.Aks
 
 
 
 # get credentials to connect to cluster
-Import-AzureRmAksCredential -ResourceGroupName containers1 -Name mySQLK8sCluster1
+Import-AzureRmAksCredential -ResourceGroupName containersdemo -Name mySQLK8sCluster1
 
 
 
@@ -55,7 +56,7 @@ kubectl exec -it podname bash
 
 
 # view dashboard
-Start-AzureRmAksDashboard -ResourceGroupName containers1 -Name mySQLK8sCluster1
+Start-AzureRmAksDashboard -ResourceGroupName containersdemo -Name mySQLK8sCluster1
 
 
 

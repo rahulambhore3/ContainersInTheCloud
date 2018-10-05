@@ -1,5 +1,11 @@
-# check AzureRM module is installed
-Get-Module -ListAvailable AzureRM
+# install AzureRM.aks with -AllowPrerelease (it's in preview - so expect weirdness!)
+# this requires up-to-date versions of PowershellGet & Packagemanagement modules
+Install-Module -Name AzureRM.Aks -AllowPrerelease
+
+
+
+# import the module
+Import-Module AzureRm.Aks
 
 
 
@@ -9,7 +15,7 @@ Connect-AzureRmAccount
 
 
 # create kubernetes cluster (with 2 nodes)
-New-AzureRmAks -ResourceGroupName containers1 -Name mySQLK8sCluster1 -NodeCount 2
+New-AzureRmAks -ResourceGroupName containersdemo -Name mySQLK8sCluster1 -NodeCount 2
 
 
 
@@ -19,7 +25,8 @@ az aks install-cli
 
 
 # get credentials to connect to cluster
-Import-AzureRmAksCredential -ResourceGroupName containers1 -Name mySQLK8sCluster1
+Import-AzureRmAksCredential -ResourceGroupName containersdemo -Name mySQLK8sCluster1
+
 
 
 # confirm connection to cluster by viewing nodes
@@ -27,61 +34,26 @@ kubectl get nodes
 
 
 
-# Get AKS client ID
-$aks = Get-AzureRmResource -ResourceGroupName containers1 -ResourceType Microsoft.ContainerService/managedClusters `
-  -ResourceName mySQLK8sCluster1 -ApiVersion 2018-03-31
-$clientid = $aks.properties.servicePrincipalProfile.clientId
-
-# Get ACR ID
-$acr = Get-AzureRmContainerRegistry -ResourceGroupName containers1 -Name TestContainerRegistry01 
-$resourceid = $acr.id
-
-
-# Create role to allow deployments
-New-AzureRmRoleAssignment -ApplicationId $clientid -RoleDefinitionName "Reader" -Scope $resourceid
-
-
-# create yaml file for deployment
-echo 'apiVersion: apps/v1beta1
-kind: Deployment
-metadata:
-  name: sqlserver
-  labels:
-    app: sqlserver
-spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        name: sqlserver
-    spec:
-      containers:
-      - name: sqlserver1
-        image: testcontainerregistry01.azurecr.io/devsqlimage:latest
-        ports:
-        - containerPort: 1433
-        env:
-        - name: SA_PASSWORD
-          value: "Testing1122"
-        - name: ACCEPT_EULA
-          value: "Y"
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: sqlserver-service
-spec:
-  ports:
-  - name: sqlserver
-    port: 1433
-    targetPort: 1433
-  selector:
-    name: sqlserver
-  type: LoadBalancer' > sqlserver.yml
+# get AKS client ID
+$Aks = Get-AzureRmResource -ResourceGroupName containersdemo `
+  -ResourceType Microsoft.ContainerService/managedClusters `
+    -ResourceName mySQLK8sCluster1 -ApiVersion 2018-03-31
+$ClientId = $Aks.properties.servicePrincipalProfile.clientId
 
 
 
-# deploy to cluster
+# get ACR ID
+$Acr = Get-AzureRmContainerRegistry -ResourceGroupName containersdemo -Name TestContainerRegistry01 
+$ResourceId = $Acr.id
+
+
+
+# create role to allow deployments
+New-AzureRmRoleAssignment -ApplicationId $ClientId -RoleDefinitionName "Reader" -Scope $ResourceId
+
+
+
+# deploy to cluster (confirm yaml file location)
 kubectl create -f sqlserver.yml
 
 
@@ -102,4 +74,4 @@ kubectl get service
 
 
 # view dashboard
-Start-AzureRmAksDashboard -ResourceGroupName containers1 -Name mySQLK8sCluster1
+Start-AzureRmAksDashboard -ResourceGroupName containersdemo -Name mySQLK8sCluster1
