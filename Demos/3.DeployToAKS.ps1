@@ -10,7 +10,7 @@ Import-Module AzureRm.Aks
 
 
 # get credentials to connect to cluster
-Import-AzureRmAksCredential -ResourceGroupName containersdemo -Name mySQLK8sCluster1
+Import-AzureRmAksCredential -ResourceGroupName containers1 -Name mySQLK8sCluster1
 
 
 
@@ -56,7 +56,7 @@ kubectl exec -it podname bash
 
 
 # view dashboard
-Start-AzureRmAksDashboard -ResourceGroupName containersdemo -Name mySQLK8sCluster1
+Start-AzureRmAksDashboard -ResourceGroupName containers1 -Name mySQLK8sCluster1
 
 
 

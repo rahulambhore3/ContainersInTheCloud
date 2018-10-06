@@ -15,7 +15,7 @@ Connect-AzureRmAccount
 
 
 # create kubernetes cluster (with 2 nodes)
-New-AzureRmAks -ResourceGroupName containersdemo -Name mySQLK8sCluster1 -NodeCount 2
+New-AzureRmAks -ResourceGroupName containers1 -Name mySQLK8sCluster1 -NodeCount 2
 
 
 
@@ -25,7 +25,7 @@ az aks install-cli
 
 
 # get credentials to connect to cluster
-Import-AzureRmAksCredential -ResourceGroupName containersdemo -Name mySQLK8sCluster1
+Import-AzureRmAksCredential -ResourceGroupName containers1 -Name mySQLK8sCluster1
 
 
 
@@ -35,7 +35,7 @@ kubectl get nodes
 
 
 # get AKS client ID
-$Aks = Get-AzureRmResource -ResourceGroupName containersdemo `
+$Aks = Get-AzureRmResource -ResourceGroupName containers1 `
   -ResourceType Microsoft.ContainerService/managedClusters `
     -ResourceName mySQLK8sCluster1 -ApiVersion 2018-03-31
 $ClientId = $Aks.properties.servicePrincipalProfile.clientId
@@ -43,7 +43,7 @@ $ClientId = $Aks.properties.servicePrincipalProfile.clientId
 
 
 # get ACR ID
-$Acr = Get-AzureRmContainerRegistry -ResourceGroupName containersdemo -Name TestContainerRegistry01 
+$Acr = Get-AzureRmContainerRegistry -ResourceGroupName containers1 -Name TestContainerRegistry01 
 $ResourceId = $Acr.id
 
 
@@ -74,4 +74,4 @@ kubectl get service
 
 
 # view dashboard
-Start-AzureRmAksDashboard -ResourceGroupName containersdemo -Name mySQLK8sCluster1
+Start-AzureRmAksDashboard -ResourceGroupName containers1 -Name mySQLK8sCluster1
