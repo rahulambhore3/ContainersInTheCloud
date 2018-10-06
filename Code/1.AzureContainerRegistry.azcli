@@ -9,12 +9,12 @@ az login
 
 
 # create a resource group
-az group create --name containersdemo --location eastus
+az group create --name containers1 --location eastus
 
 
 
 # create registry
-az acr create --resource-group containersdemo --name TestContainerRegistry01 --sku Basic
+az acr create --resource-group containers1 --name TestContainerRegistry01 --sku Basic
 
 
 
@@ -24,7 +24,7 @@ az acr login --name TestContainerRegistry01
 
 
 # find fully qualified name of registry login server
-az acr list --resource-group containersdemo --query "[].{acrLoginServer:loginServer}" --output table
+az acr list --resource-group containers1 --query "[].{acrLoginServer:loginServer}" --output table
 
 
 

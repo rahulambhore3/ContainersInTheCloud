@@ -13,12 +13,12 @@ az login
 
 
 # create a resource group for all objects
-az group create --name containersdemo --location eastus
+az group create --name containers1 --location eastus
 
 
 
 # create kubernetes cluster (with 2 nodes)
-az aks create --resource-group containersdemo --name mySQLK8sCluster1 --node-count 2 --generate-ssh-keys
+az aks create --resource-group containers1 --name mySQLK8sCluster1 --node-count 2 --generate-ssh-keys
 
 
 
@@ -28,7 +28,7 @@ az aks install-cli
 
 
 # get credentials to connect to cluster
-az aks get-credentials --resource-group containersdemo --name mySQLK8sCluster1
+az aks get-credentials --resource-group containers1 --name mySQLK8sCluster1
 
 
 
@@ -38,12 +38,12 @@ kubectl get nodes
 
 
 # Get client ID of cluster
-az aks show --resource-group containersdemo --name mySQLK8sCluster1 --query "servicePrincipalProfile.clientId" --output tsv
+az aks show --resource-group containers1 --name mySQLK8sCluster1 --query "servicePrincipalProfile.clientId" --output tsv
 
 
 
 # Get ACR ID
-az acr show --name TestContainerRegistry01 --resource-group containersdemo --query "id" --output tsv
+az acr show --name TestContainerRegistry01 --resource-group containers1 --query "id" --output tsv
 
 
 
@@ -73,9 +73,9 @@ kubectl get service
 
 
 # view dashboard
-az aks browse --resource-group containersdemo --name mySQLK8sCluster1
+az aks browse --resource-group containers1 --name mySQLK8sCluster1
 
 
 
 # delete resource group
-az group delete --name containersdemo
+az group delete --name containers1
