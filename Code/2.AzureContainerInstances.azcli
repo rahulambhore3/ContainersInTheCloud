@@ -22,7 +22,7 @@ az acr credential show -n TestContainerRegistry01
 
 
 # create keyvault
-az keyvault create --resource-group containers1s --name aptestkeyvault01
+az keyvault create --resource-group containers1 --name aptestkeyvault01
 
 
 # store password in keyvault
@@ -49,7 +49,7 @@ az keyvault secret set \
 
 # drop credentials into script and create container
 az container create \
-    --resource-group containers1s \
+    --resource-group containers1 \
     --image testcontainerregistry01.azurecr.io/devsqlimage:latest \
 	--registry-username $(az keyvault secret show \
 						--vault-name aptestkeyvault01 \
@@ -68,15 +68,15 @@ az container create \
 
 
 # confirm container created
-az container show --name testcontainer1 --resource-group containers1s
+az container show --name testcontainer1 --resource-group containers1
 
 
 
 # get container logs
-az container logs --name testcontainer1 --resource-group containers1s
+az container logs --name testcontainer1 --resource-group containers1
 
 
 
 # delete container
-az container delete --name testcontainer1 --resource-group containers1s
+az container delete --name testcontainer1 --resource-group containers1
 
