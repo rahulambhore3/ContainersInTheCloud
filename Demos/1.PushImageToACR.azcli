@@ -69,11 +69,6 @@ az acr repository show-tags --name TestContainerRegistry01 --repository devsqlim
 
 
 
-# pull out a bit more information about images
-az acr repository show-manifests --name TestContainerRegistry01 --repository devsqlimage
-
-
-
 #clean up local
 docker kill testcontainer
 docker rm testcontainer
