@@ -9,7 +9,7 @@ az login
 
 
 # list registries under resource group
-az acr list --resource-group containers1s
+az acr list --resource-group containers1
 
 
 
