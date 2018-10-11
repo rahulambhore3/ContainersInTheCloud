@@ -35,7 +35,7 @@ docker images
 
 # run container locally to confirm
 docker run -d -p 15789:1433 \
---env ACCEPT_EULA=Y 
+--env ACCEPT_EULA=Y \
 --env SA_PASSWORD=Testing1122 \
 --name testcontainer testimage
 
