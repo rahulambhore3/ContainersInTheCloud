@@ -14,12 +14,12 @@ az group create --name containers1 --location eastus
 
 
 # create registry
-az acr create --resource-group containers1 --name TestContainerRegistry01 --sku Basic
+az acr create --resource-group containers1 --name apregistry --sku Basic
 
 
 
 # log into registry
-az acr login --name TestContainerRegistry01
+az acr login --name apregistry
 
 
 
@@ -39,29 +39,35 @@ docker build -t testimage /home/dbafromthecold/git/ContainersInTheCloud/Code
 
 
 # tag local image with ACR name
-docker tag testimage1 testcontainerregistry01.azurecr.io/devsqlimage:latest
+docker tag testimage apregistry.azurecr.io/devsqlimage:latest
+docker tag testimage apregistry.azurecr.io/devsqlimage:v1
+docker tag testimage apregistry.azurecr.io/devsqlimage:v2
+docker tag testimage apregistry.azurecr.io/devsqlimage:v3
 
 
 
 # push image to registry
-docker push testcontainerregistry01.azurecr.io/devsqlimage:latest
+docker push apregistry.azurecr.io/devsqlimage:latest
+docker push apregistry.azurecr.io/devsqlimage:v1
+docker push apregistry.azurecr.io/devsqlimage:v2
+docker push apregistry.azurecr.io/devsqlimage:v3
 
 
 
 # list repositories in registry
-az acr repository list --name TestContainerRegistry01 --output table
+az acr repository list --name apregistry --output table
 
 
 
 # show tags in repository
-az acr repository show-tags --name TestContainerRegistry01 --repository devsqlimage
+az acr repository show-tags --name apregistry --repository devsqlimage
 
 
 
 # pull out a bit more information about images
-az acr repository show-manifests --name TestContainerRegistry01 --repository devsqlimage
+az acr repository show-manifests --name apregistry --repository devsqlimage
 
 
 
 # remove image from the registry
-az acr repository delete --name TestContainerRegistry01 --repository devsqlimage
+az acr repository delete --name apregistry --repository devsqlimage

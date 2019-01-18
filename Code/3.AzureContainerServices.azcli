@@ -18,7 +18,7 @@ az group create --name containers1 --location eastus
 
 
 # create kubernetes cluster (with 2 nodes)
-az aks create --resource-group containers1 --name mySQLK8sCluster1 --node-count 2 --generate-ssh-keys
+az aks create --resource-group containers1 --name SQLK8sCluster1 --node-count 2 --generate-ssh-keys
 
 
 
@@ -28,7 +28,7 @@ az aks install-cli
 
 
 # get credentials to connect to cluster
-az aks get-credentials --resource-group containers1 --name mySQLK8sCluster1
+az aks get-credentials --resource-group containers1 --name SQLK8sCluster1
 
 
 
@@ -38,12 +38,12 @@ kubectl get nodes
 
 
 # Get client ID of cluster
-K8sID=$(az aks show --resource-group containers1 --name mySQLK8sCluster1 --query "servicePrincipalProfile.clientId" --output tsv)
+K8sID=$(az aks show --resource-group containers1 --name SQLK8sCluster1 --query "servicePrincipalProfile.clientId" --output tsv)
 
 
 
 # Get ACR ID
-AcrID=$(az acr show --name TestContainerRegistry01 --resource-group containers1 --query "id" --output tsv)
+AcrID=$(az acr show --name apregistry --resource-group containers1 --query "id" --output tsv)
 
 
 
@@ -73,7 +73,7 @@ kubectl get service
 
 
 # view dashboard
-az aks browse --resource-group containers1 --name mySQLK8sCluster1
+az aks browse --resource-group containers1 --name SQLK8sCluster1
 
 
 

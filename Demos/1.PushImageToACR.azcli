@@ -9,7 +9,7 @@ az login
 
 
 # log into registry
-az acr login --name TestContainerRegistry01
+az acr login --name apregistry
 
 
 
@@ -46,7 +46,7 @@ docker ps -a
 
 
 # tag local image with ACR name
-docker tag testimage testcontainerregistry01.azurecr.io/devsqlimage:v4
+docker tag testimage apregistry.azurecr.io/devsqlimage:v4
 
 
 
@@ -56,22 +56,22 @@ docker images
 
 
 # push image to registry
-docker push testcontainerregistry01.azurecr.io/devsqlimage:v4
+docker push apregistry.azurecr.io/devsqlimage:v4
 
 
 
 # list repositories in registry
-az acr repository list --name TestContainerRegistry01 --output table
+az acr repository list --name apregistry --output table
 
 
 
 # show tags in repository
-az acr repository show-tags --name TestContainerRegistry01 --repository devsqlimage
+az acr repository show-tags --name apregistry --repository devsqlimage
 
 
 
 #clean up local
 docker kill testcontainer
 docker rm testcontainer
-docker rmi testcontainerregistry01.azurecr.io/devsqlimage:v4 testimage
+docker rmi apregistry.azurecr.io/devsqlimage:v4 testimage
 
